@@ -5,7 +5,7 @@
 import os
 import sys
 import psycopg2
-from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy import Column, ForeignKey, ForeignKeyConstraint, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
@@ -28,8 +28,17 @@ class MenuItem(Base):
     course = Column(String(250))
     description = Column(String(250))
     price = Column(String(8))
-    restaurant_id = Column(Integer, ForeignKey('restaurant.id'))
-    restaurant = relationship(Restaurant)
+
+    restaurant_id = Column(
+        Integer,
+        ForeignKey('restaurant.id', ondelete="CASCADE")
+    )
+
+    restaurant = relationship(
+        Restaurant,
+        cascade="all"
+    )
+
 
 
 engine = create_engine("postgresql+psycopg2:///restaurantmenus")

@@ -1,0 +1,15 @@
+table {
+	width: 100%;
+}
+.restaurant-item {
+	border-style: outset;
+}
+.btn{
+	width: 100%;
+}
+#editForm input.btn {
+    width: inherit;
+}
+.restaurant-create{
+    border-style: outset;
+}
