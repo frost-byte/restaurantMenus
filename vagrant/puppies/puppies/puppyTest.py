@@ -2,9 +2,11 @@ import os
 import sys
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from puppy_db_setup import Base, Puppy, Profile, Shelter, Adopter
 from datetime import datetime
 import random
+
+from puppy_db_setup import Base, Puppy, Profile, Shelter, Adopter
+from trait import Trait
 
 engine = create_engine('sqlite:///puppies.db')
 # Bind the engine to the metadata of the Base class so that the
@@ -94,3 +96,65 @@ def adoptPuppy(puppy_id, adopters):
 def balancePuppyLoad():
     # Equally balance the number of puppies across shelters.
 '''
+
+
+def testTextTrait():
+    profile = session.query(Profile).filter_by(id = 1).one()
+
+    trait = Trait(
+        "name",
+        profile.name
+    )
+
+    print trait.asInputElement("editPuppyForm")
+    print trait.asOutputElement()
+
+
+def testSelectTrait():
+    profile = session.query(Profile).filter_by(id = 1).one()
+
+    sexes = ['male','female']
+
+    trait = Trait(
+        "gender",
+        profile.gender,
+        "select",
+        sexes
+    )
+
+    print trait.asInputElement("editPuppyForm")
+    print trait.asOutputElement()
+
+
+def testDateTrait():
+    profile = session.query(Profile).filter_by(id = 1).one()
+
+    trait = Trait(
+        "birthday",
+        profile.dateOfBirth,
+        "date"
+    )
+
+    print trait.asInputElement("editPuppyForm")
+    print trait.asOutputElement()
+
+
+def testTextAreaTrait():
+    profile = session.query(Profile).filter_by(id = 1).one()
+
+    trait = Trait(
+        "description",
+        profile.description,
+        "textarea"
+    )
+
+    print trait.asInputElement("editPuppyForm")
+    print trait.asOutputElement()
+
+
+def testTraits():
+
+    testTextTrait()
+    testSelectTrait()
+    testDateTrait()
+    testTextAreaTrait()

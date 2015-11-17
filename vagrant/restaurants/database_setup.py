@@ -35,11 +35,19 @@ class MenuItem(Base):
     )
 
     restaurant = relationship(
-        Restaurant,
-        cascade="all"
+        Restaurant
     )
 
-
+    @property
+    def serialize(self):
+        # Returns object data in form that's easy to serialize.
+        return {
+            'name': self.name,
+            'description': self.description,
+            'id': self.id,
+            'price': self.price,
+            'course': self.course
+        }
 
 engine = create_engine("postgresql+psycopg2:///restaurantmenus")
 

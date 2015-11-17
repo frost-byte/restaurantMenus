@@ -1,0 +1,71 @@
+<html>
+    <head>
+        <link
+              rel="stylesheet"
+              type="text/css"
+              href="{{ url_for('static', filename='styles.css') }}">
+    </head>
+    <body>
+        <div class="pane">
+            <div class="header">
+                <h1>{{ profile.name }}</h1>
+            </div>
+
+            <a href="{{ url_for('puppiesList') }}">Back to Puppies</a><br><br>
+
+            <div class='flash'>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <ul>
+                {% for message in messages %}
+                    <li><strong> {{ message }} </strong></li>
+                {% endfor %}
+                </ul>
+                {% endif %}
+            {% endwith %}
+            </div>
+
+            <div class='picture'>
+                <img src="{{ url_for('static', filename=profile.picture) }}">
+            </div>
+            <table>
+                <tr class="trait">
+                    <td>Name</td>
+                    <td>{{profile.name}}</td>
+                </tr>
+                <tr class="trait">
+                    <td>Weight</td>
+                    <td>{{profile.weight}}</td>
+                </tr>
+                <tr class="trait">
+                    <td>Gender</td>
+                    <td>{{profile.gender}}</td>
+                </tr>
+                <tr class="trait">
+                    <td>Birthday</td>
+                    <td>{{profile.dateOfBirth}}</td>
+                </tr>
+                <tr class='trait'>
+                    <td>Description</td>
+                    <td>{{profile.description}}</td>
+                </tr>
+                <tr class="trait">
+                    <td>Special Needs</td>
+                    <td>{{profile.specialNeeds}}</td>
+                </tr>
+            </table>
+            <div class="editdeletepane">
+                <a href=
+                   "{{ url_for(
+                        'editPuppyProfile',
+                        puppy_id = profile.puppy_id,
+                        profile_id = profile.id) }}">Edit</a>
+                <a href=
+                   "{{ url_for(
+                        'deletePuppyProfile',
+                        puppy_id = profile.puppy_id,
+                        profile_id = profile.id) }}">Delete</a>
+            </div><br>
+        </div>
+    </body>
+</html>
